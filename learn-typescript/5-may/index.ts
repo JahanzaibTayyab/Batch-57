@@ -17,6 +17,11 @@ let person = {
   isUser: true,
 };
 
+let person2 = {
+  "$rt e5": "fgh",
+};
+console.log(person2["$rt e5"]);
+
 console.log("🚀 ~ person:", person);
 // value
 console.log(person.name);
