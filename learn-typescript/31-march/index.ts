@@ -5,6 +5,14 @@
 let x: number = 2;
 let y: number = 5;
 
+let fname$ = "h";
+
+let array = [1, 2, 3, 4];
+array.push(5);
+
+let array2 = ["A", "B", "C", "D"];
+array2.push("E");
+
 let add = x + y; //7
 let add1 = "x" + "y"; //xy
 let add2 = "xy" + x + y; //xy25
