@@ -1,0 +1,25 @@
+@tailwind base; /* HTML styling reset = preflight */
+@tailwind components; /* define containers  */
+@tailwind utilities; /* all variants and utilities classes */
+
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+h2 {
+  @apply text-5xl border border-red-900
+}
+
+@layer components{
+  .custom-container {
+    @apply max-w-full min-h-screen
+  }
+}
+
+
+.para {
+  @apply text-sm
+}

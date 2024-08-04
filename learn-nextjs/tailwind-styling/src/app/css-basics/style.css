@@ -1,0 +1,13 @@
+h2 {
+  color: green;
+  border: 3px solid burlywood;
+} /* tag selector */
+
+.blue-head {
+  color: blue;
+  background-color: cadetblue;
+} /* class selector */
+
+#h0 {
+  color: red;
+} /* id selector */
