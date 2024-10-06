@@ -19,24 +19,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  role: z.string().min(4),
-});
+import { registerSchema } from "@/lib/validation/schema";
 
 export default function Register() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      role: "",
-    },
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    // defaultValues: {
+    //   email: "",
+    //   password: "",
+    //   role: "",
+    // },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  console.log("🚀 ~ Register ~ form:", form.getValues());
+
+  const onSubmit = async (data: z.infer<typeof registerSchema>) => {
     try {
       // API call to login
       await fetch("/api/register", {
@@ -103,11 +100,11 @@ export default function Register() {
                 <FormItem>
                   <FormLabel>Role</FormLabel>
                   <FormControl>
-                    <Select>
+                    <Select onValueChange={field.onChange}>
                       <SelectTrigger>
                         <SelectValue placeholder="Role" />
                       </SelectTrigger>
-                      <SelectContent {...field}>
+                      <SelectContent>
                         <SelectItem value="admin">Admin</SelectItem>
                         <SelectItem value="user">User</SelectItem>
                         <SelectItem value="super-admin">Super Admin</SelectItem>

@@ -13,21 +13,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-});
+import { loginSchema } from "@/lib/validation/schema";
 
 export default function Home() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       // API call to login
       await fetch("/api/login", {
