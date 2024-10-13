@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as z from "zod";
 import { registerSchema } from "@/lib/validation/schema";
+import { db } from "@/db";
+import { usersTable } from "@/db/schema/user";
 
 export async function POST(req: NextRequest) {
   try {
@@ -8,10 +10,14 @@ export async function POST(req: NextRequest) {
 
     // Validate the parsed body using Zod
     const parsedData = registerSchema.parse(body);
+    console.log((await db))
+   const user= await (await db).insert(usersTable).values(parsedData).returning()
+
     return NextResponse.json({
       message: "User Registered Successfully",
-      parsedData,
+      user,
     });
+
   } catch (error) {
     if (error instanceof z.ZodError) {
       // Return validation errors if Zod validation fails
