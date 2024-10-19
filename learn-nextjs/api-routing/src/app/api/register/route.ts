@@ -9,9 +9,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // Validate the parsed body using Zod
-    const parsedData = registerSchema.parse(body);
-    console.log((await db))
-   const user= await (await db).insert(usersTable).values(parsedData).returning()
+  const parsedData = registerSchema.parse(body);
+   const user= await db.insert(usersTable).values(parsedData).returning()
 
     return NextResponse.json({
       message: "User Registered Successfully",
