@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import Link from "next/link";
 import { loginSchema } from "@/lib/validation/schema";
+import toast from "react-hot-toast";
 
 export default function Home() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -27,11 +28,20 @@ export default function Home() {
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       // API call to login
-      await fetch("/api/login", {
+     const result=  await fetch("/api/login", {
         method: "POST",
         body: JSON.stringify(data),
         cache: "no-store",
       });
+      if(result.ok){
+        const response = await result.json()
+        toast.success(response.message)
+      }
+      else {
+        const response = await result.json()
+        toast.error(response.message)
+      }
+
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err);
     }

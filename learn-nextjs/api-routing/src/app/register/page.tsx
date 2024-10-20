@@ -20,27 +20,36 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { registerSchema } from "@/lib/validation/schema";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 export default function Register() {
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
-    // defaultValues: {
-    //   email: "",
-    //   password: "",
-    //   role: "",
-    // },
-  });
 
-  console.log("🚀 ~ Register ~ form:", form.getValues());
+  const router=useRouter()
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema)
+  });
 
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
     try {
       // API call to login
-      await fetch("/api/register", {
+      const result =await fetch("/api/register", {
         method: "POST",
         body: JSON.stringify(data),
         cache: "no-store",
       });
+      if(result.ok){
+        const response= await result.json()
+        toast.success(response.message)
+        form.reset()
+        router.replace('/')
+      }
+      else {
+        const response= await result.json()
+        toast.error(response.message)
+      }
+     
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err);
     }
