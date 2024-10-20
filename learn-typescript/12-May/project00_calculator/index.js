@@ -1,7 +1,9 @@
 #! /usr/bin/env node
-import inquirer from "inquirer";
-import { sum, subtract, multiply, division } from "./operations.js";
-const questions = await inquirer.prompt([
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var inquirer_1 = require("inquirer");
+var operations_js_1 = require("./operations.js");
+var questions = await inquirer_1.default.prompt([
     {
         type: "number",
         name: "num1",
@@ -22,19 +24,19 @@ const questions = await inquirer.prompt([
 console.log("🚀 ~ questions:", questions);
 if (questions.operator == "+") {
     console.log("This is Sum");
-    sum(questions.num1, questions.num2);
+    (0, operations_js_1.sum)(questions.num1, questions.num2);
 }
 else if (questions.operator == "-") {
     console.log("This is Subtract");
-    subtract(questions.num1, questions.num2);
+    (0, operations_js_1.subtract)(questions.num1, questions.num2);
 }
 else if (questions.operator == "*") {
     console.log("This is Multiple");
-    multiply(questions.num1, questions.num2);
+    (0, operations_js_1.multiply)(questions.num1, questions.num2);
 }
 else if (questions.operator == "/") {
     console.log("This is Division");
-    division(questions.num1, questions.num2);
+    (0, operations_js_1.division)(questions.num1, questions.num2);
 }
 else {
     console.log("Invalid Operator");
