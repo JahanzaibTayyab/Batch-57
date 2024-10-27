@@ -1,4 +1,4 @@
-import  bcrypt  from 'bcrypt';
+import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 import * as z from "zod";
 import { loginSchema } from "@/lib/validation/schema";
@@ -9,6 +9,8 @@ import { eq } from "drizzle-orm";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log("🚀 ~ POST ~ body:", body);
+
     //throw new Error("this is Custom error");
     // Validate the parsed body using Zod
     const parsedData = loginSchema.parse(body);
@@ -19,7 +21,10 @@ export async function POST(req: NextRequest) {
     if (result.length > 0) {
       const user = result[0];
 
-      const passwordMatch = await bcrypt.compare(parsedData.password,user.password)
+      const passwordMatch = await bcrypt.compare(
+        parsedData.password,
+        user.password
+      );
       if (passwordMatch) {
         return NextResponse.json({ message: "User Login Successfully", user });
       } else {

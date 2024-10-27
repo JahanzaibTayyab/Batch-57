@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { loginSchema } from "@/lib/validation/schema";
 import toast from "react-hot-toast";
+import { handelGoogleLogin, handelLogin } from "@/lib/actions/login";
 
 export default function Home() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -28,22 +29,26 @@ export default function Home() {
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     try {
       // API call to login
-     const result=  await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        cache: "no-store",
-      });
-      if(result.ok){
-        const response = await result.json()
-        toast.success(response.message)
-      }
-      else {
-        const response = await result.json()
-        toast.error(response.message)
-      }
+      //  const result=  await fetch("/api/login", {
+      //     method: "POST",
+      //     body: JSON.stringify(data),
+      //     cache: "no-store",
+      //   });
+      //   if(result.ok){
+      //     const response = await result.json()
+      //     toast.success(response.message)
+      //   }
+      //   else {
+      //     const response = await result.json()
+      //     toast.error(response.message)
+      //   }
 
+      const result = await handelLogin(data);
+      console.log("🚀 ~ onSubmit ~ result:", result);
     } catch (err) {
       console.log("🚀 ~ onSubmit ~ err:", err);
+
+      toast.error("Invalid Email/password");
     }
   };
 
@@ -101,6 +106,7 @@ export default function Home() {
               Don&apos;t have account? Register
             </Link>
             <Button type="submit">Login</Button>
+            <Button onClick={() => handelGoogleLogin()}>Google</Button>
           </form>
         </Form>
       </div>
